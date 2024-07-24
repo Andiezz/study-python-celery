@@ -8,6 +8,9 @@ celery_app = Celery(
     "tasks", broker="redis://redis:6379/0", backend="redis://redis:6379/0"
 )
 
+# celery_app.conf.beat_schedule = {
+#     "add-every-30-seconds": {"task": "return_something", "schedule": 5.0},
+# }
 
 @celery_app.task()
 def longtime_add(x, y):
@@ -17,9 +20,10 @@ def longtime_add(x, y):
     return x + y
 
 
-@celery_app.task()
+@celery_app.task(name="return_something")
 def return_something():
     print("something")
+    logger.info("Schedule something")
     return "something"
 
 

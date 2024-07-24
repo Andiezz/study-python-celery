@@ -10,9 +10,7 @@ WORKDIR /flask_app
 
 ENV FLASK_ENV=development
 
-CMD celery -A tasks.celery_app beat --loglevel=info
-
-ENTRYPOINT flask run --host=0.0.0.0
+ENTRYPOINT flask run --host=0.0.0.0 --debug
 
 #CMD gunicorn --workers $WORKERS \
 #  --threads $THREADS \

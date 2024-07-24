@@ -26,19 +26,9 @@ def make_celery(app):
 app = Flask(__name__)
 app.config["CELERY_BACKEND"] = "redis://redis:6379/0"
 app.config["CELERY_BROKER_URL"] = "redis://redis:6379/0"
-app.config["CELERYBEAT_SCHEDULE"] = {
-    "say-every-5-seconds": {
-        "task": "tasks.return_something",
-        "schedule": timedelta(seconds=5),
-    },
-}
 app.config["CELERY_TIMEZONE"] = "UTC"
 
 celery_app = make_celery(app)
-celery_app.conf.beat_schedule = {
-    "add-every-30-seconds": {"task": "tasks.return_something", "schedule": 5.0},
-}
-
 
 @app.route("/simple_start_task")
 def call_method():

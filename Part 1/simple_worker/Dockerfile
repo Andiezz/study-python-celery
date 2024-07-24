@@ -8,8 +8,10 @@ RUN pip install -r /requirements.txt
 ADD . /flask_app
 WORKDIR /flask_app
 
-CMD celery -A tasks.celery_app beat --loglevel=info
-ENTRYPOINT celery -A tasks worker --loglevel=info
+CMD celery -A tasks.celery_app worker --loglevel=info
+  # celery -A tasks.celery_app beat --loglevel=info -s /tmp/celerybeat-schedule \
+  # && \
+# CMD celery -A tasks worker --loglevel=info
 
 #-Q celery_worker
 #ENTRYPOINT ['celery','-A','test_celery', 'worker', '--loglevel=info']
